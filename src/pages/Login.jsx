@@ -1,30 +1,39 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username) login(username);
+    login(username);
+    navigate('/');
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md space-y-4 w-80">
-        <h2 className="text-xl font-bold">Login</h2>
-        <input
-          type="text"
-          placeholder="Enter Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full px-4 py-2 border rounded"
-        />
-        <button type="submit" className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-          Login
-        </button>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded shadow-md w-96">
+        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            className="w-full px-4 py-2 border rounded"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
